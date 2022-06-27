@@ -14,11 +14,11 @@ server_scripts  {
 ui_page 'html/index.html'
 
 files {
-    'html/index.html',
-    'html/style.css',
-    'html/reset.css',
-    'html/profanity.js',
-    'html/script.js'
+    'html/*.html',
+    'html/*.css',
+    'html/*.js',
+    'html/img/*.png',
+    'html/font/*.TTF'
 }
 
 dependencies {

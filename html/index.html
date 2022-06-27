@@ -14,55 +14,51 @@
     <body>
         <div class="container">
             <div class="main-screen">
+                <img class="bg-clor" src="./img/background.png" alt="">
                 <div class="welcomescreen">
                     <div class="loading-rondje">
                         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-                        <p id="loading-text">Loading Characters</p>
+                        <p id="loading-text">Tải Nhân Vật</p>
                     </div>
                 </div>
                 <div class="characters-list">
-
-                </div>
-
-                <div class="character-info">
-                    <div class="char-info-titel"><span id="char-info-titel">Character Information</span></div>
-                    <div class="character-info-valid">
-                        <span id="no-char">Select a character slot to see all information about your character.</span>
+                    <div class="character" id="char-1" data-cid="" >
+                        <span id="slot-name">Tạo Mới</span>
                     </div>
+                    <div id="list-info"></div>
+                    <div class="character-btn" id="play"><p id="play-text">Select a character</p></div>
+                    <div class="character-btn" id="delete"><p id="delete-text">Select a character</p></div>
                 </div>
-
                 <div class="character-register">
-                    <div class="characters-register-block-header">
-                        <p>Character Registration</p>
-                        <i class="material-icons-one" id="close-reg">close</i>
-                    </div>
-                    <div class="char-register-inputs">
-                        <input type="text" id="first_name" placeholder="First Name" class="char-reg-input">
-                        <input type="text" id="last_name" placeholder="Last Name" class="char-reg-input">
-                        <input type="text" id="nationality" placeholder="Nationality" class="char-reg-input">
-                        <input type="date" id="birthdate" placeholder="Birth Date" min="1900-01-01" max="2999-12-31" class="char-reg-input">
+                    <div class="char-register-inputs" id="char-register-inputs">
+                        <input type="text" id="first_name" placeholder="Họ" class="char-reg-input">
+                        <input type="text" id="last_name" placeholder="Tên" class="char-reg-input">
+                        <input type="text" id="nationality" placeholder="Quốc tịch" class="char-reg-input">
+                        <input type="date" id="birthdate" placeholder="Ngày sinh" min="1900-01-01" max="2999-12-31" class="char-reg-input">
                         <select id="gender" name="gender">
-                            <option value="Male" selected>Man</option>
-                            <option value="Female">Woman</option>
+                            <option value="Male" selected>Nam</option>
+                            <option value="Female">Nữ</option>
                         </select>
                     </div>
-                    <div class="character-reg-btn" id="create"><p id="create-text">Confirm</p></div>
+                    <div class="character-reg-btn " id="create"><p id="create-text">Hoàn tất</p></div>
                 </div>
-
                 <div class="character-delete">
                     <div class="characters-delete-block-header">
-                        <p>Delete Character</p>
+                        <p>Xóa Nhân Vật</p>
                     </div>
 
-                    <p>Are You Sure You Want To Delete Your Character?</p>
+                    <p>Bạn có chắc chắn muốn xóa nhân vật của bạn?</p>
 
-                    <div class="character-acceptdel-btn" id="accept-delete"><p id="accept-text">Confirm</p></div>
-                    <div class="character-canceldel-btn" id="cancel-delete"><p id="cancel-text">Return</p></div>
+                    <div class="character-acceptdel-btn" id="accept-delete"><p id="accept-text">Đồng ý</p></div>
+                    <div class="character-canceldel-btn" id="cancel-delete"><p id="cancel-text">Trở lại</p></div>
                 </div>
             </div>
         </div>
     </body>
     <script type="text/javascript" src="profanity.js"></script>
     <script type="text/javascript" src="script.js"></script>
+    <script>
+
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </html>

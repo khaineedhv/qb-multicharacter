@@ -1,65 +1,75 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@font-face {
+    font-family: fontcustom;
+    src: url(./font/UTM_HELVETINS.TTF);
+}
+:root{
+    --font-main: fontcustom;
+}
+
 .container {
     display: none;
 }
 
 .main-screen {
-    position: absolute;
+    position: relative;
     height: 100vh;
     width: 100vw;
     left: 0;
     z-index: 100;
 }
-
+.bg-clor{
+    position: absolute;
+    width: 100%;
+    height: auto;
+}
 .characters-block-header>p {
     text-align: center;
     color: #ededed;
     line-height: 24px;
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
 }
-
 .characters-list {
     display: none;
     position: absolute;
-    width: 22%;
-    height: auto;
-    left: 14%;
-    top: -40%;
     overflow: visible !important;
-    background-color: rgb(23 23 23 / 80%);
     border-radius: .8vh;
-    padding: 30px;
+    left: 35%;
+    top: 239px;
 }
 
 .character-list-header {
     text-transform: uppercase;
     position: relative;
-    top: -2vh;
+    top: -10vh;
     width: 100%;
     height: 10%;
-    right: 0;
+    left: -35%;
 }
 
 .character-list-header>p {
     text-align: center;
     font-size: 2vh;
     margin-top: 3.1vh;
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
     letter-spacing: .1vh;
     font-weight: 900;
     color: #ededed;
 }
 
 .character {
+    left: 16px;
+    background-image:  repeating-linear-gradient(to right, #f99533, #deac8a);
     position: relative;
-    width: 100%;
-    height: 75px;
-    margin-top: 15px;
-    font-family: 'Poppins', sans-serif;
+    width: 546px;
+    height: 136px;
+    margin-top: 22px;
+    font-family: fontcustom;
     border-bottom: 4px solid #74aa3200;
     transition: .1s linear;
-    border-radius: .3vh;
+    border-radius: 25px;
     cursor: pointer;
+    z-index: 2;
 }
 
 .character>span {
@@ -67,7 +77,7 @@
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: .1vh;
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
 }
 
 #cid {
@@ -79,40 +89,39 @@
     line-height: 80px;
 }
 
-.char-selected {
-    background-color: #dc143c;
-}
+/* .char-selected {
+    background-color: #ffffff;
+} */
 
 .disabled {
     background-color: rgba(0, 0, 0, 0.691);
 }
-
 #slot-name {
+    top: 25px;
     position: relative;
     color: #ededed;
-    font-size: 17px;
+    font-size: 30px;
     line-height: 80px;
     left: 20px;
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
 }
-
 .character-btn {
     position: relative;
-    width: 100%;
-    height: 5.0vh;
-    top: 65%;
+    width: 221px;
+    height: 75px;
+    top: 400px;
     transition: 0.2s;
-    float: left;
-    margin-top: 10px;
-    margin-right: 10px;
+    margin-top: -30px;
+    left: 178px;
     cursor: pointer;
+    z-index: 5;
 }
 
 .character-btn>p {
     color: #ededed;
     letter-spacing: .1vh;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
     font-size: 2vh;
     text-transform: uppercase;
     line-height: 5vh;
@@ -121,15 +130,13 @@
 
 #play {
     display: none;
-    background-color: #28a745;
-    border-radius: .3vh;
-    transition: all 0.2s ease;
+    background-image:  repeating-linear-gradient(to right, #f99533, #deac8a);
+    border-radius: 28px;
+    transition: all 2s ease;
 }
-
-#play:hover {
-    background-color: #228a3a;
+#play-text{
+    margin-top: 10px;
 }
-
 #delete {
     display: none;
     background-color: #dc143c;
@@ -174,6 +181,7 @@
 }
 
 #no-char {
+    display: none;
     position: absolute;
     color: #ededed;
     font-size: 16px;
@@ -187,25 +195,35 @@
     top: 3%;
     overflow: visible !important;
 }
-
+#list-info{
+    width: 490px;
+    height: 407px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    z-index: 1;
+}
 .character-info-valid {
-    position: relative;
-    top: 15%;
-    overflow: visible !important;
+    left: 44px;
+    /* top: -1000px; */
+    position: absolute;
+    overflow: hidden;
+    background-color: white;
 }
 
 .character-info-box {
     position: relative;
-    color: #ededed;
+    color: #000000;
     font-size: 1.5vh;
     width: 100%;
     height: 2.9vh;
     font-weight: 900;
     text-transform: uppercase;
     margin-bottom: 12px;
+    left: 50px;
 }
 
 .char-info-js {
+    font-family: fontcustom;
     position: absolute;
     left: 50%;
 }
@@ -227,10 +245,10 @@
     background-color: rgb(23 23 23 / 80%);
     border-radius: .8vh;
     padding: 30px;
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     color: #ededed;
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
     overflow: visible !important;
 }
 
@@ -242,14 +260,14 @@
     text-align: left;
     font-size: 2vh;
     line-height: 29px;
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
     font-weight: 900;
     text-transform: uppercase;
     overflow: visible !important;
 }
 
 .characters-delete-block-header>p {
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
     overflow: visible !important;
 }
 
@@ -295,7 +313,7 @@
     color: #ededed;
     text-align: center;
     padding-top: 1vh;
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
     overflow: visible !important;
     font-weight: 900;
     text-transform: uppercase;
@@ -305,26 +323,20 @@
     color: #ededed;
     text-align: center;
     padding-top: 1vh;
-    font-family: 'Poppins', sans-serif;
+    font-family: fontcustom;
     overflow: visible !important;
     font-weight: 900;
     text-transform: uppercase;
 }
 
 .character-register {
+    height: auto;
     display: none;
-    position: relative;
-    width: 25%;
-    height: 32%;
-    top: 125%;
-    margin-left: auto;
-    margin-right: auto;
-    left: 32px;
-    background-color: rgb(23 23 23 / 80%);
+    position: absolute;
+    overflow: visible !important;
     border-radius: .8vh;
-    padding: 30px;
-    font-family: 'Poppins', sans-serif;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    left: 35%;
+    top: 239px;
 }
 
 i#close-reg {
@@ -353,48 +365,65 @@ i#close-reg {
     font-size: 2vh;
     font-weight: 900;
 }
-
-.char-register-inputs {
+.char-register-input{
+    left: 44px;
+    top: -1000px;
+    position: relative;
+    overflow: hidden;
+    
+}
+#char-register-inputs {
     position: absolute;
-    top: 14%;
+    left: 44px;
+    top: -1px;
     overflow: visible !important;
+    background-color: white;
+    width: 490px;
+    height: 495px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    z-index: 1;
 }
 
+
 .char-reg-input {
+    margin-left: 66px;
+    width: 350px;
+    height: 60px;
     position: relative;
     float: left;
     margin-top: 1vh;
     border: none;
-    background-color: #444444;
+    background-color: #ffffff;
     outline: none;
-    width: 92%;
-    height: 3vh;
-    color: #ededed;
+    color: #000000;
     max-width: 100%;
     font-weight: 900;
     padding: 4px;
-    border-radius: .3vh;
-    font-family: 'Poppins', sans-serif;
+    border-radius: 25px;
+      font-family: fontcustom;
     text-align: center;
     transition: all 0.2s ease-in-out;
     cursor: text;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
-
+.mgr{
+    margin-top: 50px;
+}
 select {
     position: absolute;
     border: none;
-    border: .3vh solid #444444;
-    background-color: #171717;
+    background-color: #ffffff;
     outline: none;
-    width: 93.5%;
-    height: 4vh;
-    top: 19.9vh;
-    left: .1vh;
-    color: #ededed;
+    width: 350px;
+    height: 60px;
+    top: 30vh;
+    left: 70px;
+    color: #000000;
     max-width: 100%;
     padding: 4px;
-    border-radius: .3vh;
-    font-family: 'Poppins', sans-serif;
+    border-radius: 25px;
+      font-family: fontcustom;
     text-align-last: center;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -402,14 +431,12 @@ select {
     text-overflow: '';
     transition: all 0.2s ease-in-out;
     cursor: pointer;
-}
-
-select:hover {
-    background-color: rgba(34, 34, 34, 0.808);
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 
 select:focus {
-    background-color: rgba(34, 34, 34, 0.808);
+    background-color: rgba(255, 255, 255, 0.808);
 }
 
 #gender option {
@@ -427,11 +454,11 @@ select::-ms-expand {
 }
 
 .char-reg-input::placeholder {
-    color: rgba(255, 255, 255, 0.52);
+    color: rgb(0, 0, 0);
 }
 
 input[type="date"] {
-    color: #ededed;
+    color: #000000;
     text-align: center;
 }
 
@@ -454,33 +481,39 @@ input[type="date"]::-webkit-clear-button {
 }
 
 #birthdate {
-    color: #ededed;
+    color: #000000;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
+      font-family: fontcustom;
 }
-
 .character-reg-btn {
-    position: absolute;
-    max-width: 87%;
-    height: 4vh;
-    background-color: #dc143c;
-    border-radius: .3vh;
-    bottom: 3vh;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
+    position: relative;
+    width: 221px;
+    height: 75px;
+    bottom: -450px;
+    transition: 0.2s;
+    left: 186px;
     cursor: pointer;
+    z-index: 5;
 }
 
 .character-reg-btn>p {
-    text-align: center;
-    line-height: 4vh;
+    margin-top: 10px;
     color: #ededed;
-    text-transform: uppercase;
-    font-family: 'Poppins', sans-serif;
+    letter-spacing: .1vh;
+    text-align: center;
+    font-family: fontcustom;
     font-size: 2vh;
-    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 5vh;
+    font-weight: bold;
 }
+
+#create {
+    background-image:  repeating-linear-gradient(to right, #f99533, #deac8a);
+    border-radius: 28px;
+    transition: all 0.2s ease;
+}
+
 
 .loading-rondje {
     position: absolute;
@@ -498,7 +531,7 @@ input[type="date"]::-webkit-clear-button {
 .loading-rondje > p {
     color: white;
     margin-top: 1vh;
-    font-family: 'Poppins', sans-serif;
+      font-family: fontcustom;
     text-shadow: 1px 1px 0px #00000085;
 }
 
@@ -540,4 +573,343 @@ input[type="date"]::-webkit-clear-button {
     100% {
         transform: rotate(360deg);
     }
+}
+@media screen and (max-width: 1600px) {
+    .character {
+        top: -50px;
+        height: 81px;
+    }
+    #slot-name {
+        overflow: visible;
+        top: 0px;
+    }
+    .character-btn {
+        top: 355px;
+        width: 200px;
+        height: 75px;
+        bottom: 3vh;
+        left: 35%;
+        right: 40%;
+    }
+    .character-info-box {
+        color: #000000;
+        font-size: 2vh;
+        width: 120%;
+        height: 4.9vh;
+        font-weight: 1000;
+        text-transform: uppercase;
+        left: 20px;
+        /* margin-bottom: 12px; */
+    }
+    #list-info{
+        width: 500px;
+        height: 457px;
+    }
+    .character-info-valid {
+        top: 15px;
+        left: 38px;
+    }
+    #play-text{
+        margin-top: 15px;
+    }
+    #info-label {
+        margin-left: 0px;
+    }
+}
+@media screen and (max-width: 1440px) {
+    .bg-clor{
+        width: 135%;
+    }
+    .character {
+        top: -50px;
+        height: 81px;
+        left: 220px;
+    }
+    #slot-name {
+        overflow: visible;
+        top: 0px;
+    }
+    .character-btn {
+        top: 355px;
+        width: 200px;
+        height: 75px;
+        bottom: 3vh;
+        left: 390px;
+        right: 0;
+    }
+    .character-info-box {
+        color: #000000;
+        font-size: 2vh;
+        width: 120%;
+        height: 4.9vh;
+        font-weight: 1000;
+        text-transform: uppercase;
+        /* margin-bottom: 12px; */
+    }
+    #list-info{
+        width: 500px;
+        height: 457px;
+    }
+    .character-info-valid {
+        top: 15px;
+        left: 248px;
+    }
+    #play-text{
+        margin-top: 15px;
+    }
+    #info-label {
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 1360px) {
+    .character {
+        left: 220px;
+        width: 400px;
+        height: 81px;
+    }
+    #slot-name {
+        overflow: visible;
+        top: 0px;
+        left: 30%;
+    }
+    #list-info{
+        width: 372px;
+        height: 407px;
+    }
+    .character-info-box {
+        color: #000000;
+        font-size: 2.5vh;
+        width: 110%;
+        height: 3.9vh;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        left: 20px;
+    }
+    .character-info-valid {
+        margin-top: -30px;
+        left: 235px;
+    }
+    .character-btn {
+        top: 275px;
+        bottom: 1vh;
+        left: 320px;
+    }
+    #play-text{
+        font-size: 3vh;
+        height: 3.9vh;
+        font-weight: 500;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .bg-clor{
+        width: 150%;
+    }
+    .character {
+        top: -15px;
+        left: 25px;
+        width: 300px;
+        height: 81px;
+    }
+    .characters-list{
+        z-index: 99;
+    }
+    #slot-name {
+        overflow: visible;
+        top: 0px;
+        left: 30%;
+    }
+    .character-btn {
+        top: 290px;
+        width: 100px;
+        height: 50px;
+        bottom: 1vh;
+        left: 120px;
+        right: 0;
+    }
+    .character-btn>p {
+        letter-spacing: 0vh;
+        font-size: 0vh;
+        font-weight: 100;
+        line-height: 1vh;
+    }
+    .character-info-box {
+        color: #000000;
+        font-size: 1.5vh;
+        width: 110%;
+        height: 3.9vh;
+        font-weight: 500;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        left: 20px;
+    }
+    #list-info{
+        width: 244px;
+        height: 307px;
+    }
+    .character-info-valid {
+        margin-top: 73px;
+        left: 50px;
+    }
+    #play-text{
+        font-size: small;
+        margin-top: 20px;
+    }
+    .mgr{
+        margin-top: 10px;
+    }
+    
+}
+
+@media screen and (max-width: 1152px) {
+    .bg-clor{
+        width: 135%;
+    }
+    .character {
+        left: 200px;
+        width: 356px;
+        height: 81px;
+    }
+    #slot-name {
+        overflow: visible;
+        top: 0px;
+        left: 30%;
+    }
+    .character-btn {
+        top: 325px;
+        width: 200px;
+        height: 70px;
+        bottom: 3vh;
+        left: 275px;
+        right: 0;
+    }
+    .character-info-box {
+        color: #000000;
+        font-size: 2vh;
+        width: 110%;
+        height: 3.5vh;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        left: 10px;
+    }
+    .character-btn>p {
+        letter-spacing: 0;
+        text-transform: none;
+        line-height: normal;
+        font-weight: bold;
+    }
+    #list-info{
+        width: 309px;
+        height: 357px;
+    }
+    .character-info-valid {
+        left: 223px;
+    }
+    #play-text{
+        top: 20px;
+        font-size: 2vh;
+    }
+    .mgr{
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .bg-clor{
+        width: 150%;
+    }
+    .character {
+        left: 238px;
+        width: 317px;
+        height: 81px;
+    }
+    #slot-name {
+        overflow: visible;
+        top: 0px;
+        left: 30%;
+    }
+    .character-btn {
+        top: 340px;
+        width: 100px;
+        height: 50px;
+        bottom: 3vh;
+        left: 350px;
+        right: 0;
+    }
+    .character-info-box {
+        color: #000000;
+        font-size: 2.5vh;
+        width: 110%;
+        height: 3.9vh;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        left: 10px;
+    }
+    #list-info{
+        width: 281px;
+        height: 357px;
+    }
+    .character-info-valid {
+        left: 256px;
+    }
+    #play-text{
+        margin-top: 15px;
+    }
+    .mgr{
+        margin-top: 23px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .bg-clor{
+        width: 150%;
+    }
+    .character {
+        top: -50px;
+        left: 182px;
+        width: 255px;
+        height: 81px;
+    }
+    #slot-name {
+        overflow: visible;
+        top: 0px;
+        left: 30%;
+    }
+    .character-btn {
+        top: 230px;
+        width: 100px;
+        height: 50px;
+        bottom: 3vh;
+        left: 265px;
+        right: 0;
+    }
+    .character-info-box {
+        color: #000000;
+        font-size: 2.5vh;
+        width: 110%;
+        height: 3.9vh;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        left: 18px;
+    }
+    #list-info{
+        top: -50px;
+        width: 255px;
+        height: 307px;
+    }
+    .character-info-valid {
+        left: 182px;
+    }
+    #play-text{
+        margin-top: 15px;
+    }
+    .mgr{
+        margin-top: 43px;
+    }
+    
 }

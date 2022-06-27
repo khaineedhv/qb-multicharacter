@@ -2,50 +2,45 @@ var selectedChar = null;
 var WelcomePercentage = "30vh"
 qbMultiCharacters = {}
 var Loaded = false;
-var NChar = null;
-var EnableDeleteButton = false;
-
-$(document).ready(function (){
+$(document).ready(function () {
     window.addEventListener('message', function (event) {
         var data = event.data;
+
         if (data.action == "ui") {
-			NChar = data.nChar;
-            EnableDeleteButton = data.enableDeleteButton;
             if (data.toggle) {
                 $('.container').show();
                 $(".welcomescreen").fadeIn(150);
                 qbMultiCharacters.resetAll();
 
-                var originalText = "Retrieving player data";
+                var originalText = "Truy xuất dữ liệu người chơi";
                 var loadingProgress = 0;
                 var loadingDots = 0;
                 $("#loading-text").html(originalText);
-                var DotsInterval = setInterval(function() {
+                var DotsInterval = setInterval(function () {
                     $("#loading-text").append(".");
                     loadingDots++;
                     loadingProgress++;
                     if (loadingProgress == 3) {
-                        originalText = "Validating player data"
+                        originalText = "Xác thực dữ liệu người chơi"
                         $("#loading-text").html(originalText);
                     }
                     if (loadingProgress == 4) {
-                        originalText = "Retrieving characters"
+                        originalText = "Lấy các ký tự"
                         $("#loading-text").html(originalText);
                     }
                     if (loadingProgress == 6) {
-                        originalText = "Validating characters"
+                        originalText = "Xác thực nhân vật"
                         $("#loading-text").html(originalText);
                     }
-                    if(loadingDots == 4) {
+                    if (loadingDots == 4) {
                         $("#loading-text").html(originalText);
                         loadingDots = 0;
                     }
                 }, 500);
 
-                setTimeout(function(){
-					setCharactersList()
+                setTimeout(function () {
                     $.post('https://qb-multicharacter/setupCharacters');
-                    setTimeout(function(){
+                    setTimeout(function () {
                         clearInterval(DotsInterval);
                         loadingProgress = 0;
                         originalText = "Retrieving data";
@@ -73,49 +68,31 @@ $(document).ready(function (){
     $('.datepicker').datepicker();
 });
 
-$('.continue-btn').click(function(e){
+$('.continue-btn').click(function (e) {
     e.preventDefault();
 });
 
-$('.disconnect-btn').click(function(e){
+$('.disconnect-btn').click(function (e) {
     e.preventDefault();
 
     $.post('https://qb-multicharacter/closeUI');
     $.post('https://qb-multicharacter/disconnectButton');
 });
 
-function setupCharInfo(cData) {
-    if (cData == 'empty') {
-        $('.character-info-valid').html('<span id="no-char">The selected character slot is not in use yet.<br><br>This character doesn\'t have information yet.</span>');
-    } else {
-        var gender = "Man"
-        if (cData.charinfo.gender == 1) { gender = "Woman" }
-        $('.character-info-valid').html(
-        '<div class="character-info-box"><span id="info-label">Name: </span><span class="char-info-js">'+cData.charinfo.firstname+' '+cData.charinfo.lastname+'</span></div>' +
-        '<div class="character-info-box"><span id="info-label">Birth date: </span><span class="char-info-js">'+cData.charinfo.birthdate+'</span></div>' +
-        '<div class="character-info-box"><span id="info-label">Gender: </span><span class="char-info-js">'+gender+'</span></div>' +
-        '<div class="character-info-box"><span id="info-label">Nationality: </span><span class="char-info-js">'+cData.charinfo.nationality+'</span></div>' +
-        '<div class="character-info-box"><span id="info-label">Job: </span><span class="char-info-js">'+cData.job.label+'</span></div>' +
-        '<div class="character-info-box"><span id="info-label">Cash: </span><span class="char-info-js">&#36; '+cData.money.cash+'</span></div>' +
-        '<div class="character-info-box"><span id="info-label">Bank: </span><span class="char-info-js">&#36; '+cData.money.bank+'</span></div>' +
-        '<div class="character-info-box"><span id="info-label">Phone number: </span><span class="char-info-js">'+cData.charinfo.phone+'</span></div>' +
-        '<div class="character-info-box"><span id="info-label">Account number: </span><span class="char-info-js">'+cData.charinfo.account+'</span></div>');
-    }
-}
-
 function setupCharacters(characters) {
-    $.each(characters, function(index, char){
-        $('#char-'+char.cid).html("");
-        $('#char-'+char.cid).data("citizenid", char.citizenid);
-        setTimeout(function(){
-            $('#char-'+char.cid).html('<span id="slot-name">'+char.charinfo.firstname+' '+char.charinfo.lastname+'<span id="cid">' + char.citizenid + '</span></span>');
-            $('#char-'+char.cid).data('cData', char)
-            $('#char-'+char.cid).data('cid', char.cid)
+    $.each(characters, function (index, char) {
+        $('#char-' + char.cid).html("");
+        $('#char-' + char.cid).data("citizenid", char.citizenid);
+        setTimeout(function () {
+            $('#char-' + char.cid).html('<span id="slot-name">' + char.charinfo.lastname + '</span>');
+            $('#char-' + char.cid).data('cData', char)
+            $('#char-' + char.cid).css({ "text-align": "left" })
+            $('#char-' + char.cid).data('cid', char.cid)
         }, 100)
     })
 }
 
-$(document).on('click', '#close-log', function(e){
+$(document).on('click', '#close-log', function (e) {
     e.preventDefault();
     selectedLog = null;
     $('.welcomescreen').css("filter", "none");
@@ -124,7 +101,7 @@ $(document).on('click', '#close-log', function(e){
     logOpen = false;
 });
 
-$(document).on('click', '.character', function(e) {
+$(document).on('click', '.character', function (e) {
     var cDataPed = $(this).data('cData');
     e.preventDefault();
     if (selectedChar === null) {
@@ -132,24 +109,72 @@ $(document).on('click', '.character', function(e) {
         if ((selectedChar).data('cid') == "") {
             $(selectedChar).addClass("char-selected");
             setupCharInfo('empty')
-            $("#play-text").html("Create");
-            $("#play").css({"display":"block"});
-            $("#delete").css({"display":"none"});
+            $("#play-text").html("Tạo");
+            $("#play").css({ "display": "block" });
+            $("#list-info").addClass("character-info-valid");
+            $("#list-info").css({"display":"none"});
+            // $("#delete").css({"display":"none"});
             $.post('https://qb-multicharacter/cDataPed', JSON.stringify({
                 cData: cDataPed
             }));
         } else {
             $(selectedChar).addClass("char-selected");
             setupCharInfo($(this).data('cData'))
-            $("#play-text").html("Play");
-            $("#delete-text").html("Delete");
-            $("#play").css({"display":"block"});
-            if (EnableDeleteButton) {
-                $("#delete").css({"display":"block"});
-            }
+            $("#play-text").html("XÁC NHẬN");
+            $("#delete-text").html("Xóa");
+            $("#play").css({ "display": "block" });
+            $("#list-info").addClass("character-info-valid");
+            // $("#delete").css({"display":"block"});
             $.post('https://qb-multicharacter/cDataPed', JSON.stringify({
                 cData: cDataPed
             }));
+            function myFunction(x, y) {
+                var id = null;
+                var elem = document.getElementById("list-info");
+                var pos = -100;
+                clearInterval(id);
+                id = setInterval(frame, 2);
+                if (y.matches) {
+                    function frame() {
+                        if (pos == -20) {
+                            pos == -20;
+                            clearInterval(id);
+                        } else {
+                            ppos();
+                        }
+
+                    }
+                } else if (x.matches) {
+                    function frame() {
+                        if (pos == -80) {
+                            pos == -80;
+                            clearInterval(id);
+                        } else {
+                            ppos();
+                        }
+
+                    }
+                } else {
+                    function frame() {
+                        if (pos == 0) {
+                            pos == 0;
+                            clearInterval(id);
+                        } else {
+                            ppos();
+                        }
+
+                    }
+                }
+                function ppos() {
+                    pos++;
+                    elem.style.top = pos + 'px';
+                }
+            }
+            var x = window.matchMedia("(max-width: 800px)")
+            var y = window.matchMedia("(max-width: 1024px)")
+            myFunction(x, y)
+            x.addListener(myFunction)
+            y.addListener(myFunction)
         }
     } else if ($(selectedChar).attr('id') !== $(this).attr('id')) {
         $(selectedChar).removeClass("char-selected");
@@ -157,28 +182,90 @@ $(document).on('click', '.character', function(e) {
         if ((selectedChar).data('cid') == "") {
             $(selectedChar).addClass("char-selected");
             setupCharInfo('empty')
-            $("#play-text").html("Register");
-            $("#play").css({"display":"block"});
-            $("#delete").css({"display":"none"});
+            $("#play-text").html("Tạo");
+            $("#play").css({ "display": "block" });
+            $("#list-info").addClass("character-info-valid");
+            // $("#delete").css({"display":"none"});
             $.post('https://qb-multicharacter/cDataPed', JSON.stringify({
                 cData: cDataPed
             }));
         } else {
             $(selectedChar).addClass("char-selected");
             setupCharInfo($(this).data('cData'))
-            $("#play-text").html("Play");
-            $("#delete-text").html("Delete");
-            $("#play").css({"display":"block"});
-            if (EnableDeleteButton) {
-                $("#delete").css({"display":"block"});
-            }
+            $("#play-text").html("XÁC NHẬN");
+            $("#delete-text").html("Xóa");
+            $("#play").css({ "display": "block" });
+            $("#list-info").addClass("character-info-valid");
+            // $("#delete").css({"display":"block"});
             $.post('https://qb-multicharacter/cDataPed', JSON.stringify({
                 cData: cDataPed
             }));
+            function myFunction(x, y) {
+                var id = null;
+                var elem = document.getElementById("list-info");
+                var pos = -100;
+                clearInterval(id);
+                id = setInterval(frame, 2);
+                if (y.matches) {
+                    function frame() {
+                        if (pos == -20) {
+                            pos == -20;
+                            clearInterval(id);
+                        } else {
+                            ppos();
+                        }
+
+                    }
+                } else if (x.matches) {
+                    function frame() {
+                        if (pos == -80) {
+                            pos == -80;
+                            clearInterval(id);
+                        } else {
+                            ppos();
+                        }
+
+                    }
+                } else {
+                    function frame() {
+                        if (pos == 0) {
+                            pos == 0;
+                            clearInterval(id);
+                        } else {
+                            ppos();
+                        }
+
+                    }
+                }
+                function ppos() {
+                    pos++;
+                    elem.style.top = pos + 'px';
+                }
+            }
+            var x = window.matchMedia("(max-width: 800px)")
+            var y = window.matchMedia("(max-width: 1024px)")
+            myFunction(x, y)
+            x.addListener(myFunction)
+            y.addListener(myFunction)
         }
     }
 });
-
+function setupCharInfo(cData) {
+    if (cData == 'empty') {
+        $('#list-info').html('<span id="no-char">Nhân vật chưa được tạo.<br><br>Hãy tạo và tham gia nào!</span>');
+    } else {
+        var gender = "Nam"
+        if (cData.charinfo.gender == 1) { gender = "Nữ" }
+        $('#list-info').html(
+            '<div class="character-info-box mgr"><span id="info-label">Tên: </span><span class="char-info-js">' + cData.charinfo.lastname + '</span></div>' +
+            '<div class="character-info-box"><span id="info-label">Ngày sinh: </span><span class="char-info-js">' + cData.charinfo.birthdate + '</span></div>' +
+            '<div class="character-info-box"><span id="info-label">Giới tính: </span><span class="char-info-js">' + gender + '</span></div>' +
+            '<div class="character-info-box"><span id="info-label">Quốc tịch: </span><span class="char-info-js">' + cData.charinfo.nationality + '</span></div>' +
+            '<div class="character-info-box"><span id="info-label">Nghề: </span><span class="char-info-js">' + cData.job.label + '</span></div>' +
+            '<div class="character-info-box"><span id="info-label">Tiền mặt: </span><span class="char-info-js">&#36; ' + cData.money.cash + '</span></div>' +
+            '<div class="character-info-box"><span id="info-label">Ngân hàng: </span><span class="char-info-js">&#36; ' + cData.money.bank + '</span></div>');
+    }
+}
 var entityMap = {
     '&': '&amp;',
     '<': '&lt;',
@@ -189,7 +276,6 @@ var entityMap = {
     '': '&#x60;',
     '=': '&#x3D;'
 };
-
 function escapeHtml(string) {
     return String(string).replace(/[&<>"'=/]/g, function (s) {
         return entityMap[s];
@@ -198,32 +284,23 @@ function escapeHtml(string) {
 function hasWhiteSpace(s) {
     return /\s/g.test(s);
 }
-
-$('#nationality').keyup(function() {
-    var nationalityValue = $(this).val();
-    if(nationalityValue.indexOf(' ') !== -1) {
-        $(this).val(nationalityValue.replace(' ', ''))
-    }
-});
-
 $(document).on('click', '#create', function (e) {
     e.preventDefault();
-
-    let firstname= escapeHtml($('#first_name').val())
-    let lastname= escapeHtml($('#last_name').val())
-    let nationality= escapeHtml($('#nationality').val())
-    let birthdate= escapeHtml($('#birthdate').val())
-    let gender= escapeHtml($('select[name=gender]').val())
+    let firstname = escapeHtml($('#first_name').val())
+    let lastname = escapeHtml($('#last_name').val())
+    let nationality = escapeHtml($('#nationality').val())
+    let birthdate = escapeHtml($('#birthdate').val())
+    let gender = escapeHtml($('select[name=gender]').val())
     let cid = escapeHtml($(selectedChar).attr('id').replace('char-', ''))
     const regTest = new RegExp(profList.join('|'), 'i');
     //An Ugly check of null objects
 
-    if (!firstname || !lastname || !nationality || !birthdate || hasWhiteSpace(firstname) || hasWhiteSpace(lastname)|| hasWhiteSpace(nationality) ){
+    if (!firstname || !lastname || !nationality || !birthdate || hasWhiteSpace(firstname) || hasWhiteSpace(lastname) || hasWhiteSpace(nationality)) {
         console.log("FIELDS REQUIRED")
         return false;
     }
 
-    if(regTest.test(firstname) || regTest.test(lastname)){
+    if (regTest.test(firstname) || regTest.test(lastname)) {
         console.log("ERROR: You used a derogatory/vulgar term. Please try again!")
         return false;
     }
@@ -239,12 +316,12 @@ $(document).on('click', '#create', function (e) {
     $(".container").fadeOut(150);
     $('.characters-list').css("filter", "none");
     $('.character-info').css("filter", "none");
-    qbMultiCharacters.fadeOutDown('.character-register', '125%', 400);
+    qbMultiCharacters.fadeOutDown('.character-register', '130%', 400);
     refreshCharacters()
 
 });
 
-$(document).on('click', '#accept-delete', function(e){
+$(document).on('click', '#accept-delete', function (e) {
     $.post('https://qb-multicharacter/removeCharacter', JSON.stringify({
         citizenid: $(selectedChar).data("citizenid"),
     }));
@@ -253,36 +330,20 @@ $(document).on('click', '#accept-delete', function(e){
     refreshCharacters();
 });
 
-$(document).on('click', '#cancel-delete', function(e){
+$(document).on('click', '#cancel-delete', function (e) {
     e.preventDefault();
     $('.characters-block').css("filter", "none");
     $('.character-delete').fadeOut(150);
 });
 
-function setCharactersList() {
-    var htmlResult = '<div class="character-list-header"><p>My Characters</p></div>'
-    for (let i = 1; i <= NChar; i++) {
-        htmlResult += '<div class="character" id="char-'+ i +'" data-cid=""><span id="slot-name">Empty Slot<span id="cid"></span></span></div>'
-    }
-    htmlResult += '<div class="character-btn" id="play"><p id="play-text">Select a character</p></div><div class="character-btn" id="delete"><p id="delete-text">Select a character</p></div>'
-    $('.characters-list').html(htmlResult)
-}
-
 function refreshCharacters() {
-    var htmlResult = ''
-    for (let i = 1; i <= NChar; i++) {
-        htmlResult += '<div class="character" id="char-'+ i +'" data-cid=""><span id="slot-name">Empty Slot<span id="cid"></span></span></div>'
-    }
-
-    htmlResult += '<div class="character-btn" id="play"><p id="play-text">Select a character</p></div><div class="character-btn" id="delete"><p id="delete-text">Select a character</p></div>'
-    $('.characters-list').html(htmlResult)
-    
-    setTimeout(function(){
+    // $('.characters-list').html('<div class="character" id="char-1" data-cid=""><span id="slot-name">Trống<span id="cid"></span></span></div><div class="character" id="char-2" data-cid=""><span id="slot-name">Trống<span id="cid"></span></span></div><div class="character" id="char-3" data-cid=""><span id="slot-name">Trống<span id="cid"></span></span></div><div class="character" id="char-4" data-cid=""><span id="slot-name">Trống<span id="cid"></span></span></div><div class="character" id="char-5" data-cid=""><span id="slot-name">Trống<span id="cid"></span></span></div><div class="character-btn" id="play"><p id="play-text">Select a character</p></div><div class="character-btn" id="delete"><p id="delete-text">Select a character</p></div>')
+    setTimeout(function () {
         $(selectedChar).removeClass("char-selected");
         selectedChar = null;
         $.post('https://qb-multicharacter/setupCharacters');
-        $("#delete").css({"display":"none"});
-        $("#play").css({"display":"none"});
+        $("#delete").css({ "display": "none" });
+        $("#play").css({ "display": "none" });
         qbMultiCharacters.resetAll();
     }, 100)
 }
@@ -291,7 +352,7 @@ $("#close-reg").click(function (e) {
     e.preventDefault();
     $('.characters-list').css("filter", "none")
     $('.character-info').css("filter", "none")
-    qbMultiCharacters.fadeOutDown('.character-register', '125%', 400);
+    qbMultiCharacters.fadeOutDown('.character-register', '130%', 400);
 })
 
 $("#close-del").click(function (e) {
@@ -300,7 +361,7 @@ $("#close-del").click(function (e) {
     $('.character-delete').fadeOut(150);
 })
 
-$(document).on('click', '#play', function(e) {
+$(document).on('click', '#play', function (e) {
     e.preventDefault();
     var charData = $(selectedChar).data('cid');
 
@@ -309,20 +370,19 @@ $(document).on('click', '#play', function(e) {
             $.post('https://qb-multicharacter/selectCharacter', JSON.stringify({
                 cData: $(selectedChar).data('cData')
             }));
-            setTimeout(function(){
+            setTimeout(function () {
                 qbMultiCharacters.fadeOutDown('.characters-list', "-40%", 400);
                 qbMultiCharacters.fadeOutDown('.character-info', "-40%", 400);
                 qbMultiCharacters.resetAll();
             }, 1500);
         } else {
-            $('.characters-list').css("filter", "blur(2px)")
-            $('.character-info').css("filter", "blur(2px)")
-            qbMultiCharacters.fadeInDown('.character-register', '25%', 400);
+            $("#play").css({ "display": "none" });
+            qbMultiCharacters.fadeInDown('.character-register', '35%', 400);
         }
     }
 });
 
-$(document).on('click', '#delete', function(e) {
+$(document).on('click', '#delete', function (e) {
     e.preventDefault();
     var charData = $(selectedChar).data('cid');
 
@@ -334,29 +394,29 @@ $(document).on('click', '#delete', function(e) {
     }
 });
 
-qbMultiCharacters.fadeOutUp = function(element, time) {
-    $(element).css({"display":"block"}).animate({top: "-80.5%",}, time, function(){
-        $(element).css({"display":"none"});
+qbMultiCharacters.fadeOutUp = function (element, time) {
+    $(element).css({ "display": "block" }).animate({ top: "-80.5%", }, time, function () {
+        $(element).css({ "display": "none" });
     });
 }
 
-qbMultiCharacters.fadeOutDown = function(element, percent, time) {
+qbMultiCharacters.fadeOutDown = function (element, percent, time) {
     if (percent !== undefined) {
-        $(element).css({"display":"block"}).animate({top: percent,}, time, function(){
-            $(element).css({"display":"none"});
+        $(element).css({ "display": "block" }).animate({ top: percent, }, time, function () {
+            $(element).css({ "display": "none" });
         });
     } else {
-        $(element).css({"display":"block"}).animate({top: "103.5%",}, time, function(){
-            $(element).css({"display":"none"});
+        $(element).css({ "display": "block" }).animate({ top: "103.5%", }, time, function () {
+            $(element).css({ "display": "none" });
         });
     }
 }
 
-qbMultiCharacters.fadeInDown = function(element, percent, time) {
-    $(element).css({"display":"block"}).animate({top: percent,}, time);
+qbMultiCharacters.fadeInDown = function (element, percent, time) {
+    $(element).css({ "display": "block" }).animate({ top: percent, }, time);
 }
 
-qbMultiCharacters.resetAll = function() {
+qbMultiCharacters.resetAll = function () {
     $('.characters-list').hide();
     $('.characters-list').css("top", "-40");
     $('.character-info').hide();
@@ -364,5 +424,4 @@ qbMultiCharacters.resetAll = function() {
     $('.welcomescreen').css("top", WelcomePercentage);
     $('.server-log').show();
     $('.server-log').css("top", "25%");
-    selectedChar = null;
 }
